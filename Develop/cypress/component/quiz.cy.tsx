@@ -1,17 +1,8 @@
-import Quiz from '../../client/src/components/Quiz';
-import { mount } from '@cypress/react';
-
-describe('Quiz Component', () => {
-  it('Displays questions and handles answers correctly', () => {
-    const mockQuestions = [
-      { 
-        question: 'Capital of France?', 
-        answers: [{ text: 'Paris', isCorrect: true }]
-      }
-    ];
-    
-    mount(<Quiz />);
+describe('Quiz App End-to-End', () => {
+  it('Completes a full quiz session', () => {
+    cy.visit('/');
     cy.get('button').contains('Start Quiz').click();
-    cy.get('h2').should('contain', mockQuestions[0].question);
+    cy.get('button').each(($btn) => cy.wrap($btn).click());
+    cy.get('.alert-success').should('contain', 'Your score');
   });
 });
